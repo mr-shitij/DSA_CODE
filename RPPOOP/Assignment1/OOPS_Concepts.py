@@ -37,9 +37,9 @@ class Community():
 		return Student(name, age, mis, collge, year, communiy_name)
 
 
-e1 = Community.as_employe("Sanskar1", 19, "Something", 100000, "Bhai Ki Community")
+e1 = Community.as_employe("Person1_Employee", 19, "Something", 100000, "COMP_PANY")
 e1.display()
 
-e2 = Community.as_student("Sanskar2", 19, "SY", 142103007, "COEP", "Bhai Ki Community")
+e2 = Community.as_student("Person2_Student", 19, "SY", 142103007, "COEP", "COEP")
 e2.display()
 
