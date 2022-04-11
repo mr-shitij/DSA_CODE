@@ -33,11 +33,11 @@ void search(BST tree, int MIS) { // to recursively search for a node with the gi
 		if(tree->MIS == MIS) {
 			printf("\n DATA FOUND : %d", MIS);
 		}
-		else if(tree->MIS > MIS) {
+		else if(tree->MIS < MIS) {
 			search(tree->right, MIS);
 		}
 		else {
-			search(tree->right, MIS);
+			search(tree->left, MIS);
 		}
 		
 	}
@@ -102,7 +102,76 @@ void postorderNonRecursive(BST tree) {
 
 }
 
+int powerFunc(int base, int po) {
+	int value = 0;
+	while(po != 0) {
+		value = base * base;
+		po--;
+	}
+	return value;
+}
 
+void display(void *data) {
+	printf("\n %d", *((int*)data));
+}
+
+// Problem
+void Display_Level(BST tree, int level) { // Level Wise traversal
+	if(tree != NULL) {
+		if(level == 0) {
+			printf("\n %d", tree->MIS);
+			return;
+		}
+	
+		int currentLevel = 0;
+		List queue;
+		initList(&queue);
+
+		BST current = tree;
+		enqueue(&queue, (void *)current);
+
+
+		while(currentLevel != level) {
+			BST temp = (BST)queue->data;
+			dequeue(&queue);
+
+			currentLevel++;
+
+			enqueue(&queue, (void *)temp->left);
+			enqueue(&queue, (void *)temp->right);
+		}
+
+		traverse(queue, display);
+		
+		printf("H6\n");
+		int power = powerFunc(2, level);
+		printf("\n POWER : %d", power);
+		for(int iterator = 0; iterator <= power; iterator++) {
+			printf("H7\n");
+			BST temp = (BST)peek(queue);
+			dequeue(&queue);
+
+			printf("H8\n");
+
+			if(temp != NULL)
+				printf("\n %d", temp->MIS);
+			printf("H9\n");
+		}		
+		
+	}
+}
+
+
+void removeNode() {
+
+}
+
+void destoryTree() {
+
+}
+
+
+/*
 // Problem
 void Display_Level(BST tree, int level) { // Level Wise traversal
 	if(tree != NULL) {
@@ -137,13 +206,8 @@ void Display_Level(BST tree, int level) { // Level Wise traversal
 	}
 }
 
-void removeNode() {
+*/
 
-}
-
-void destoryTree() {
-
-}
 
 
 /*

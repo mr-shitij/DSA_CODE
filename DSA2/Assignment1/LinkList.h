@@ -18,4 +18,5 @@ void enqueue(List *list, void *data);
 int dequeue(List *list);
 
 void traverse(List list, void (*display_list)(void *));
+void* peek(List list);
 

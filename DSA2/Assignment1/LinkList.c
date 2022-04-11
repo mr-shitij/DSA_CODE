@@ -91,6 +91,12 @@ void traverse(List list, void (*display_list)(void *)) {
 	}
 }
 
+void* peek(List list) {
+	if(list == NULL)
+		return NULL;
+	return list->data;
+}
+
 /*
 void display(void *data) {
 	printf("\n %d", *((int*)data));
