@@ -11,8 +11,9 @@ int main() {
 		printf("\n 3.InOrder");
 		printf("\n 4.PostOrder");
 		printf("\n 5.Search");
-		printf("\n 6.Display Level");
-		printf("\n 7.Exit");
+		printf("\n 6.Remove");
+		printf("\n 7.Display Level");
+		printf("\n 8.Exit");
 		printf("\n Select Choice : ");
 		scanf("%d", &i);
 
@@ -32,25 +33,29 @@ int main() {
 				preorder(tree);
 				break;
 		
-	                case 3:
+			case 3:
 				inorder(tree);
 				break;
                         case 4:
 				postorderNonRecursive(tree);
 				break;
                         case 5:
-                        	printf("\n Enter the MIS : ");
+				printf("\n Enter the MIS : ");
                         	scanf("%d", &data);
 				search(tree, data);
 				break;
                         case 6:
-                        	printf("\n Enter the Level : ");
-                        	scanf("%d", &data);                        
+				printf("\n Enter the Level : ");
+				scanf("%d", &data);                        
+				removeNode(&tree, data);
+				break;
+			case 7:
+				printf("\n Enter the Level : ");
+				scanf("%d", &data);                        
 				Display_Level(tree, data);
 				break;
-
 		}
-
-	} while (i != 7);
+		
+	} while (i != 8);
 	return 0;
 }
