@@ -2,7 +2,7 @@
 #include"BST.h"
 
 int main() {
-	BST tree, tempTree;
+	BST tree = NULL, tempTree = NULL, tempParentTree = NULL;
 	initBST(&tree);
 	int i = 0, data;
 	do {
@@ -25,9 +25,9 @@ int main() {
 				// then we have to create tempNode and then use it in recurrsion to insert new node so that reference to root not going to lost.
 				tempTree = tree;
 				if(tree == NULL)
-					insertNode(&tree, data);
+					insertNode(&tree, &tempParentTree, data);
 				else
-					insertNode(&tempTree, data);
+					insertNode(&tempTree, &tempParentTree, data);
 				break;
 			case 2:
 				preorder(tree);

@@ -8,12 +8,13 @@ void initBST(BST *tree) {
 	*tree = NULL;
 }
 
-void insertNode(BST *tree, int data) {
+void insertNode(BST *tree, BST *parentTree, int data) {
 	if(*tree == NULL) {
 		*tree = malloc(sizeof(Node));
 		(*tree)->left = NULL;
 		(*tree)->right = NULL;
 		(*tree)->name = NULL;
+		(*tree)->parent = (*parentTree);
 		(*tree)->MIS = data;
 		
 	}
@@ -21,10 +22,12 @@ void insertNode(BST *tree, int data) {
 		return;
 	}
 	else if((*tree)->MIS > data) {
-		insertNode(&((*tree)->left), data);
+		(*parentTree) = *tree;
+		insertNode(&((*tree)->left), &(*parentTree), data);
 	}
 	else if((*tree)->MIS < data) {
-		insertNode(&((*tree)->right), data);
+		(*parentTree) = *tree;
+		insertNode(&((*tree)->right), &(*parentTree), data);
 	}
 }
 
@@ -47,9 +50,9 @@ int search(BST tree, int MIS) { // to recursively search for a node with the giv
 
 void inorder(BST tree) {
         if(tree != NULL) {
-		inorder(tree->left);
-		printf("\n %d", tree->MIS);
-		inorder(tree->right);
+ 		inorder(tree->left);
+ 		printf("\n %d", tree->MIS);
+ 		inorder(tree->right);
         }
 }
 
@@ -108,30 +111,63 @@ void display(void *data) {
 	printf("\n %d", *((int*)data));
 }
 
+int powerFunc(int base, int po) {
+	int value = 0;
+	while(po != 0) {
+		value = base * base;
+		po--;
+	}
+	return value;
+}
+
 void Display_Level(BST tree, int level) { // Level Wise traversal
 	if(tree != NULL) {
-		if(level == 0)
-			printf("\n %d", tree->MIS);
-		else {
-			Display_Level(tree->left, level - 1);
-			Display_Level(tree->right, level - 1);
+		int currentLevel = 0;
+		int totalElementInQueue = 0;
+		List queue;
+		initList(&queue);
+
+		BST current = tree;
+		enqueue(&queue, (void *)current);
+		while(currentLevel != level) {
+			BST temp = (BST)queue->data;
+			dequeue(&queue);
+
+			currentLevel++;
+
+			enqueue(&queue, (void *)temp->left);
+			enqueue(&queue, (void *)temp->right);
+
+			totalElementInQueue += 1;
+		}	
+
+		int totalElementToTraverse = powerFunc(2, level);
+		while(totalElementToTraverse < totalElementInQueue){
+			dequeue(&queue);
+			totalElementInQueue -= 1;			
 		}
+
+		
+		while(queue != NULL) {
+			BST temp = (BST)peek(queue);
+			dequeue(&queue);
+
+			if(temp != NULL)
+				printf("\n %d", temp->MIS);
+		}		
+		
 	}
 }
 
 void removeNode(BST *tree, int MIS) {
-	printf("H1 \n");
 	if(tree != NULL) {
-		printf("H2 \n");
-		BST parentNode = *tree;
-		BST crrentNode = *tree;
-		printf("H3 \n");
+		Node *parentNode = NULL;
+		Node *crrentNode = *tree;
+		// Search for the existance of the element
 		while(crrentNode != NULL) {
-			printf("H4 \n");
 			if(crrentNode->MIS == MIS) {
 				break;
 			}
-			printf("H5 \n");
 			parentNode = crrentNode;
 			if(crrentNode->MIS < MIS) {
 				crrentNode = crrentNode->right;
@@ -139,85 +175,89 @@ void removeNode(BST *tree, int MIS) {
 			else {
 				crrentNode = crrentNode->left;
 			}
-			printf("H6 \n");
 		}
-		printf("H7 \n");
+		// if current is null means not found
 		if(crrentNode == NULL) {
 			return;
 		}
-		printf("H8 \n");
-		
+
+
 		/* Node with 0 child */
 		if(crrentNode->left == NULL && crrentNode->right == NULL) {
-			printf("H9 \n");
-			if(parentNode->left == crrentNode) {
-				parentNode->left = NULL;
+			// if parentNode is not null means the node is not of root
+			if(parentNode != NULL) {
+				if(parentNode->left == crrentNode) {
+					parentNode->left = NULL;
+				}
+				else {
+					parentNode->right = NULL;				
+				}
 			}
-			else {
-				parentNode->right = NULL;				
+			else{
+				*tree = NULL;
 			}
 			free(crrentNode);
 			crrentNode = NULL;
 			return;
 		}
-		
-		printf("H10 \n");
+
 		/* Node with 1 child */
 		if(crrentNode->left != NULL && crrentNode->right == NULL) {
-			printf("H11 \n");
-			if(parentNode->left == crrentNode) {
-				parentNode->left = crrentNode->left;
+			// if parentNode is not null means the node is not of root
+			if(parentNode != NULL) {
+				if(parentNode->left == crrentNode) {
+					parentNode->left = crrentNode->left;
+				}
+				else {
+					parentNode->right = crrentNode->left;
+				}
 			}
-			else {
-				parentNode->right = crrentNode->left;
+			else{
+				*tree = crrentNode->left;
 			}
 			free(crrentNode);
 			crrentNode = NULL;
 			return;
 		}
 		else if(crrentNode->left == NULL && crrentNode->right != NULL) {
-			printf("H12 \n");
-			if(parentNode->right == crrentNode) {
-				parentNode->left = crrentNode->right;
+			// if parentNode is not null means the node is not of root
+			if(parentNode != NULL) {
+				if(parentNode->right == crrentNode) {
+					parentNode->right = crrentNode->right;
+				}
+				else {
+					parentNode->left = crrentNode->right;
+				}
 			}
-			else {
-				parentNode->right = crrentNode->right;
+			else{
+				*tree = crrentNode->right;
 			}
 			free(crrentNode);
 			crrentNode = NULL;
 			return;
 		}
 
-		printf("H13 \n");
 		/* Node with 2 child */
 		if(crrentNode->left != NULL && crrentNode->right != NULL) {
-			// Find the minimum node from the right subtree
-			BST parentOfMinNode = NULL;
+			// Find the minimum node from the right subtree (inorder successor)
+			BST parentOfMinNode = crrentNode;
 			BST minNode = crrentNode->right;
-			
-			printf("H14 \n");
+
 			while(minNode->left != NULL) {
 				parentOfMinNode = minNode;
 				minNode = minNode->left;
 			}
-			if(parentOfMinNode != NULL)
+			if(parentOfMinNode == crrentNode)
+				parentOfMinNode->right = minNode->right;
+			else if(parentOfMinNode != NULL)
 				parentOfMinNode->left = minNode->right;
-			
-			
-			printf("H15 \n");
-						
-			if(parentNode->left == crrentNode) {
-				parentNode->left = minNode;
-			}
-			else {
-				parentNode->right = minNode;
-			}
+	
 
-			printf("H16 \n");
-			minNode->left = crrentNode->left;
-			minNode->right = crrentNode->right;
-			free(crrentNode);
-			crrentNode = NULL;
+			crrentNode->MIS = minNode->MIS;
+			crrentNode->name = minNode->name;
+
+			free(minNode);	
+
 		}
 	}
 }
@@ -232,102 +272,17 @@ void destoryTree(BST tree) {
 
 
 /*
-int powerFunc(int base, int po) {
-	int value = 0;
-	while(po != 0) {
-		value = base * base;
-		po--;
-	}
-	return value;
-}
-
-
 void Display_Level(BST tree, int level) { // Level Wise traversal
 	if(tree != NULL) {
-		if(level == 0) {
+		if(level == 0)
 			printf("\n %d", tree->MIS);
-			return;
-		}
-	
-		int currentLevel = 0;
-		List queue;
-		initList(&queue);
-
-		BST current = tree;
-		enqueue(&queue, (void *)current);
-
-
-		while(currentLevel != level) {
-			BST temp = (BST)queue->data;
-			dequeue(&queue);
-
-			currentLevel++;
-
-			enqueue(&queue, (void *)temp->left);
-			enqueue(&queue, (void *)temp->right);
-		}
-
-		traverse(queue, display);
-		
-		printf("H6\n");
-		int power = powerFunc(2, level);
-		printf("\n POWER : %d", power);
-		for(int iterator = 0; iterator <= power; iterator++) {
-			printf("H7\n");
-			BST temp = (BST)peek(queue);
-			dequeue(&queue);
-
-			printf("H8\n");
-
-			if(temp != NULL)
-				printf("\n %d", temp->MIS);
-			printf("H9\n");
-		}		
-		
-	}
-}
-*/
-
-
-
-/*
-void Display_Level(BST tree, int level) { // Level Wise traversal
-	if(tree != NULL) {
-
-		int currentLevel = 0, flag = 0, enqueueFlag = 0;
-
-		BST iterator = NULL;
-		List list;
-		initList(&list);
-		enqueue(&list, (void *)tree);
-
-		while(list != NULL) {
-			iterator = ((BST)list->data);
-			if(iterator->left != NULL && enqueueFlag == 0) {
-				enqueue(&list, (void *)iterator->left);
-
-				currentLevel++;
-				flag = 1;
-			}
-			
-			if(iterator->right != NULL && enqueueFlag == 0) {
-				enqueue(&list, (void *)iterator->right);
-				if(flag == 0)
-					currentLevel++;
-			}
-			
-			if(currentLevel == level) {
-				printf("\n %d", iterator->MIS);
-				enqueueFlag++;
-			}
-			dequeue(&list);
+		else {
+			Display_Level(tree->left, level - 1);
+			Display_Level(tree->right, level - 1);
 		}
 	}
 }
-
-
 */
-
 
 /*
 void add_node(BST *tree, int data) {
@@ -374,8 +329,6 @@ void insertNode(BST *tree, int data){
 	}
 }
 */
-
-
 
 /*
 void convertToListByInOrder(BST tree, List* list) {

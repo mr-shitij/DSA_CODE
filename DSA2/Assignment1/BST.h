@@ -4,6 +4,7 @@
 typedef struct Node {
 	struct Node* left;
 	struct Node* right;
+	struct Node* parent;
 	int MIS;
 	char *name;
 }Node;
@@ -13,7 +14,7 @@ void initBST(BST *tree);
 
 void add_node(BST *tree, int data);
 
-void insertNode(BST *tree, int data);
+void insertNode(BST *tree, BST *parentTree, int data);
 void removeNode();
 int search(BST tree, int MIS); // to recursively search for a node with the given key.
 
