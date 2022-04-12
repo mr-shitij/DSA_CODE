@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include<string.h>
 #include<stdlib.h>
 #include"BST.h"
 #include"LinkList.h"
@@ -8,12 +9,12 @@ void initBST(BST *tree) {
 	*tree = NULL;
 }
 
-void insertNode(BST *tree, BST *parentTree, int data) {
+void insertNode(BST *tree, BST *parentTree, int data, char name[]) {
 	if(*tree == NULL) {
 		*tree = malloc(sizeof(Node));
 		(*tree)->left = NULL;
 		(*tree)->right = NULL;
-		(*tree)->name = NULL;
+		strcpy((*tree)->name, name);
 		(*tree)->parent = (*parentTree);
 		(*tree)->MIS = data;
 		
@@ -23,11 +24,11 @@ void insertNode(BST *tree, BST *parentTree, int data) {
 	}
 	else if((*tree)->MIS > data) {
 		(*parentTree) = *tree;
-		insertNode(&((*tree)->left), &(*parentTree), data);
+		insertNode(&((*tree)->left), &(*parentTree), data, name);
 	}
 	else if((*tree)->MIS < data) {
 		(*parentTree) = *tree;
-		insertNode(&((*tree)->right), &(*parentTree), data);
+		insertNode(&((*tree)->right), &(*parentTree), data, name);
 	}
 }
 
@@ -51,14 +52,14 @@ int search(BST tree, int MIS) { // to recursively search for a node with the giv
 void inorder(BST tree) {
         if(tree != NULL) {
  		inorder(tree->left);
- 		printf("\n %d", tree->MIS);
+ 		printf("\n MIS : %d, Name : %s", tree->MIS, tree->name);
  		inorder(tree->right);
         }
 }
 
 void preorder(BST tree) {
         if(tree != NULL) {
-		printf("\n %d", tree->MIS);
+ 		printf("\n MIS : %d, Name : %s", tree->MIS, tree->name);
 		preorder(tree->left);
 		preorder(tree->right);
         }
@@ -68,7 +69,7 @@ void postorder(BST tree) {
 	if(tree != NULL) {
 		postorder(tree->left);
 		postorder(tree->right);
-		printf("\n %d", tree->MIS);
+ 		printf("\n MIS : %d, Name : %s", tree->MIS, tree->name);
 	}
 }
 
@@ -107,55 +108,14 @@ void postorderNonRecursive(BST tree) {
 
 }
 
-void display(void *data) {
-	printf("\n %d", *((int*)data));
-}
-
-int powerFunc(int base, int po) {
-	int value = 0;
-	while(po != 0) {
-		value = base * base;
-		po--;
-	}
-	return value;
-}
-
 void Display_Level(BST tree, int level) { // Level Wise traversal
 	if(tree != NULL) {
-		int currentLevel = 0;
-		int totalElementInQueue = 0;
-		List queue;
-		initList(&queue);
-
-		BST current = tree;
-		enqueue(&queue, (void *)current);
-		while(currentLevel != level) {
-			BST temp = (BST)queue->data;
-			dequeue(&queue);
-
-			currentLevel++;
-
-			enqueue(&queue, (void *)temp->left);
-			enqueue(&queue, (void *)temp->right);
-
-			totalElementInQueue += 1;
-		}	
-
-		int totalElementToTraverse = powerFunc(2, level);
-		while(totalElementToTraverse < totalElementInQueue){
-			dequeue(&queue);
-			totalElementInQueue -= 1;			
+		if(level == 0)
+			printf("\n %d", tree->MIS);
+		else {
+			Display_Level(tree->left, level - 1);
+			Display_Level(tree->right, level - 1);
 		}
-
-		
-		while(queue != NULL) {
-			BST temp = (BST)peek(queue);
-			dequeue(&queue);
-
-			if(temp != NULL)
-				printf("\n %d", temp->MIS);
-		}		
-		
 	}
 }
 
@@ -254,7 +214,7 @@ void removeNode(BST *tree, int MIS) {
 	
 
 			crrentNode->MIS = minNode->MIS;
-			crrentNode->name = minNode->name;
+			strcpy(minNode->name, crrentNode->name);
 
 			free(minNode);	
 
@@ -272,14 +232,56 @@ void destoryTree(BST tree) {
 
 
 /*
+void display(void *data) {
+	printf("\n %d", *((int*)data));
+}
+
+int powerFunc(int base, int po) {
+	int value = 0;
+	while(po != 0) {
+		value = base * base;
+		po--;
+	}
+	return value;
+}
+
 void Display_Level(BST tree, int level) { // Level Wise traversal
 	if(tree != NULL) {
-		if(level == 0)
-			printf("\n %d", tree->MIS);
-		else {
-			Display_Level(tree->left, level - 1);
-			Display_Level(tree->right, level - 1);
+		int currentLevel = 0;
+		int totalElementInQueue = 0;
+		List queue;
+		initList(&queue);
+
+		BST current = tree;
+		enqueue(&queue, (void *)current);
+		totalElementInQueue += 1;
+		while(currentLevel != level) {
+			BST temp = (BST)queue->data;
+			dequeue(&queue);
+
+			currentLevel++;
+
+			enqueue(&queue, (void *)temp->left);
+			enqueue(&queue, (void *)temp->right);
+
+			totalElementInQueue += 1;
+		}	
+
+		int totalElementToTraverse = powerFunc(2, level);
+		while(totalElementToTraverse < totalElementInQueue){
+			dequeue(&queue);
+			totalElementInQueue -= 1;			
 		}
+
+		
+		while(queue != NULL) {
+			BST temp = (BST)peek(queue);
+			dequeue(&queue);
+
+			if(temp != NULL)
+				printf("\n %d", temp->MIS);
+		}		
+		
 	}
 }
 */
