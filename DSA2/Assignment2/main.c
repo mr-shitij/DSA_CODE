@@ -2,12 +2,12 @@
 #include"BST.h"
 
 int main() {
-	BST tree = NULL;
+	BST tree;
 	init_bst(&tree);
 	int i = 0, data;
 	do {
 		printf("\n 1.Insert");
-		printf("\n 2.PreOrder");
+		printf("\n 2.Recursive Traverse");
 		printf("\n 3.Exit");
 		printf("\n Select Choice : ");
 		scanf("%d", &i);

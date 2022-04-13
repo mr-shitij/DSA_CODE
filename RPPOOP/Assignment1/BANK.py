@@ -43,12 +43,15 @@ while flag != 3:
 	flag = int(input("Enter Your Choice : "))
 	if flag == 1:
 			account_number = int(input("Enter Account Number : "))
+			name = str(input("Enter Name : "))
+			account_type = input("Enter Account Type : ")
+			initial_balance = int(input("Initial balance : "))
 			accounts[account_number] = BankAccount(
-										input("Enter Name : "),
-										account_number,
-										input("Enter Account Type : "), 
-										int(input("Initial balance : "))
-										)
+								name,
+								account_number,
+								account_type, 
+								initial_balance
+							)
 	elif flag == 2:
 		print("1. Deposite")
 		print("2. Withdraw")
