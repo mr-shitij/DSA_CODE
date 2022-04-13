@@ -21,7 +21,7 @@ int main() {
 			case 2:
 				recursive_traverse(tree, 0);
 				break;
-		}
+	}
 		
 	} while (i != 3);
 	return 0;
