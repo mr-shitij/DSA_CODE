@@ -23,6 +23,7 @@ class Student(Person):
 	def display(self):
 		Person.display(self)
 		print("I am {} student of {} and MIS is : {} ".format(self.year, self.college, self.mis))
+		print("Community is : " + self.get_community())
 
 	def get_mis(self):
 		return self.mis
@@ -46,6 +47,8 @@ class Employe(Person):
 	def display(self):
 		Person.display(self)
 		print("Salary {}, Company {} ".format(self.salary, self.company))
+		print("Community is : " + self.get_community())
+
 
 	def get_company(self):
 		return self.company
@@ -66,10 +69,81 @@ class Community():
 		return Student(name, age, mis, collge, year, communiy_name)
 
 
-e1 = Community.as_employe("Person1_Employee", 19, "Something", 100000, "COMP_PANY")
-e1.display()
-print("Community Of Employee is : " + e1.get_community())
+data_of_students = {}
+data_of_employee = {}
 
-e2 = Community.as_student("Person2_Student", 19, "SY", 142103007, "COEP", "COEP")
-e2.display()
-print("Community Of Student is : " + e2.get_community())
+while True:
+	try:
+		print("Enter 100 to exit")
+		data = str(input("Who Are You (student / employee) ? "))
+		if data == "student":
+			print("1.Insert")
+			print("2.Show")
+			print("3.Update")
+			choice =  int(input("Select Your Choice "))
+			if choice == 1:
+				name = str(input("Enter your name : "))
+				data_of_students[name] = Community.as_student(
+					name, 
+					int(input("Enter Your Age  : ")), 
+					str(input("Enter Your Year  : ")), 
+					int(input("Enter Your MIS  : ")), 
+					str(input("Enter Your College Name  : ")), 
+					str(input("Enter Your Community Name  : "))
+				)
+			elif choice == 2:
+				data_of_students[str(input("Enter Your Name : "))].display()
+
+			elif choice == 3:
+				name = str(input("Enter your name : "))
+				data_of_students.pop(name)
+				data_of_students[name] = Community.as_student(
+					name, 
+					int(input("Enter Your Age  : ")), 
+					str(input("Enter Your Year  : ")), 
+					int(input("Enter Your MIS  : ")), 
+					str(input("Enter Your College Name  : ")), 
+					str(input("Enter Your Community Name  : "))
+				)
+
+			else:
+				print("Please Select Proper Choice ..!!!")
+
+		elif data == "employee":
+			print("1.Insert")
+			print("2.Show")
+			print("3.Update")
+			choice =  int(input("Select Your Choice "))
+			if choice == 1:
+				name = str(input("Enter your name : "))
+				data_of_employee[name] = Community.as_employe(
+					name, 
+					int(input("Enter Your Age  : ")), 
+					str(input("Enter Your Company  : ")), 
+					int(input("Enter Your Salary  : ")), 
+					str(input("Enter Your Community Name  : "))
+				)
+			elif choice == 2:
+				data_of_employee[str(input("Enter Your Name : "))].display()
+			
+			elif choice == 3:
+				name = str(input("Enter your name : "))
+				data_of_employee.pop(name)
+				data_of_employee[name] = Community.as_employe(
+					name, 
+					int(input("Enter Your Age  : ")), 
+					str(input("Enter Your Company  : ")), 
+					int(input("Enter Your Salary  : ")), 
+					str(input("Enter Your Community Name  : "))
+				)
+
+			else:
+				print("Please Select Proper Choice ..!!!")
+
+		elif data == "100":
+			break
+
+		else:
+			print("Please Enter Proper Details ..!!! ")
+	except:
+		print("Invalid Data Format")
