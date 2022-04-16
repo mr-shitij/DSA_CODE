@@ -4,11 +4,12 @@
 int main() {
 	BST tree;
 	init_bst(&tree);
-	int i = 0, data;
+	int i = 0, data, j;
 	do {
 		printf("\n 1.Insert");
 		printf("\n 2.Recursive Traverse");
-		printf("\n 3.Exit");
+		printf("\n 3.IsComplete");
+		printf("\n 4.Exit");
 		printf("\n Select Choice : ");
 		scanf("%d", &i);
 
@@ -21,8 +22,15 @@ int main() {
 			case 2:
 				recursive_traverse(tree, 0);
 				break;
-	}
+			case 3:
+				j = isComplete(tree);
+				if(j == 0)
+					printf("Not Complete\n");
+				else
+					printf("Complete\n");				
+				break;
+		}
 		
-	} while (i != 3);
+	} while (i != 4);
 	return 0;
 }

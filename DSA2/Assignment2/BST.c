@@ -43,13 +43,23 @@ void recursive_traverse(BST tree, int index) {
 	}
 }
 
-int isComplete(BST tree, ) {
+int isComplete(BST tree) {
 	if(tree == NULL)
 		return 0;
+
 	int index = 0;
-	while(tree->array[index] != INT_MIN) {
-		
+	while(index < tree->size && tree->array[index] != INT_MIN) {
+		index++;
 	}
+
+	while(index < tree->size && tree->array[index] == INT_MIN) {
+		index++;
+	}
+
+	if(index < tree->size) {
+		return 0;
+	}
+	return 1;	
 }
 
 
