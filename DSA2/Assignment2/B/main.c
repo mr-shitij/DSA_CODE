@@ -9,11 +9,8 @@
 
 
 int main() {
-	BST tree = NULL, tempTree = NULL, tempParentTree = NULL;
-	initBST(&tree);
-	int data[] = {5, 15, 10}
-	Node *tree = generateFromTree(data, start, 3);
-	
+	int data[] = {5, 15, 10};
+	BST tree = generateFromTree(data, 0, 2);
 	inorder(tree);
 	return 0;
 }
