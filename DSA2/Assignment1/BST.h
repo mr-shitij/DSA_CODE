@@ -16,6 +16,7 @@ void initBST(BST *tree);
 
 void add_node(BST *tree, int data);
 
+void insertNodeWithoutRecurrsion(BST *tree, int data, char name[]);
 void insertNode(BST *tree, BST *parentTree, int data, char name[]);
 void removeNode();
 int search(BST tree, int MIS); // to recursively search for a node with the given key.

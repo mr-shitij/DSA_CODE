@@ -9,6 +9,55 @@ void initBST(BST *tree) {
 	*tree = NULL;
 }
 
+void insertNodeWithoutRecurrsion(BST *tree, int data, char name[]) {
+	Node *newNode = (Node*) malloc(sizeof(Node));
+
+	if(newNode == NULL) return;
+
+	newNode->left = NULL;
+	newNode->right = NULL;
+	newNode->parent = NULL;
+	newNode->MIS = data;
+	strcpy(newNode->name, name);
+
+	printf("H1\n");
+
+	Node *parentNode = NULL;
+	Node *temp = *tree;
+
+	printf("H2\n");
+	while(temp != NULL) {
+		parentNode = temp;
+		if(temp->MIS == data) {
+			free(newNode);
+			return;
+		}
+		else if(temp->MIS > data) {
+			temp = temp->left;
+		}
+		else {
+			temp = temp->right;		
+		}
+		printf("H3\n");
+	}
+
+	printf("H4\n");
+	if(parentNode == NULL) {
+		*tree = newNode;
+		printf("H5\n");
+	}
+	else if(parentNode->MIS > data) {
+		parentNode->left = newNode;
+		printf("H6\n");
+	}
+	else{
+		parentNode->right = newNode;
+		printf("H7\n");
+	}
+	printf("H8\n");
+
+}
+
 void insertNode(BST *tree, BST *parentTree, int data, char name[]) {
 	if(*tree == NULL) {
 		*tree = malloc(sizeof(Node));

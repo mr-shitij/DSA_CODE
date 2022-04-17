@@ -13,10 +13,8 @@ void init_bst(BST *tree) {
 
 void insert_bst(BST *tree, int data) {
 	if((*tree) != NULL) {
-		printf("\n H0");
 		int index = 0;
 		while(index < (*tree)->size && (*tree)->array[index] != INT_MIN) {
-			printf("\n H1");
 			if((*tree)->array[index] == data) {
 				return;
 			}
@@ -26,12 +24,9 @@ void insert_bst(BST *tree, int data) {
 			else {
                         	index = index*2 + 1;
                 	}
-			printf("\n Index : %d", index);
 		}
-		printf("\n HELLO");
 		if(!(index < (*tree)->size)) return;
 		(*tree)->array[index] = data;
-		printf("\n Data : %d", (*tree)->array[index]);
 	}
 }
 
