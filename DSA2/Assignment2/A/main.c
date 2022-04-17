@@ -1,4 +1,5 @@
 #include<stdio.h>
+#include <limits.h>
 #include"BST.h"
 
 int main() {
@@ -20,7 +21,7 @@ int main() {
 				insert_bst(&tree, data);
 				break;
 			case 2:
-				recursive_traverse(tree, 0);
+				recursive_traverse(tree);
 				break;
 			case 3:
 				j = isComplete(tree);

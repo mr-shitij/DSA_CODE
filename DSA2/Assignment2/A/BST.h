@@ -11,7 +11,8 @@ typedef Node* BST;
 
 void init_bst(BST *tree);
 void insert_bst(BST *tree, int data);
-void recursive_traverse(BST tree, int index);
+void recursive_traverse(BST tree);
+void _inorder(BST tree, int index);
 int isComplete(BST tree);
 
 

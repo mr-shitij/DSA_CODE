@@ -30,12 +30,16 @@ void insert_bst(BST *tree, int data) {
 	}
 }
 
-void recursive_traverse(BST tree, int index) {
+void _inorder(BST tree, int index) {
 	if(tree != NULL && tree->array[index] != INT_MIN) {
-		recursive_traverse(tree, index * 2 + 1);
+		_inorder(tree, index * 2 + 1);
 		printf("%d\n", tree->array[index]);
-		recursive_traverse(tree, index * 2 + 2);
+		_inorder(tree, index * 2 + 2);
 	}
+}
+
+void recursive_traverse(BST tree) {
+	_inorder(tree, 0);
 }
 
 int isComplete(BST tree) {
