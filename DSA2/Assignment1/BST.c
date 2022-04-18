@@ -2,7 +2,7 @@
 #include<string.h>
 #include<stdlib.h>
 #include"BST.h"
-#include"LinkList.h"
+#include"Stack.h"
 
 
 void initBST(BST *tree) {
@@ -20,12 +20,9 @@ void insertNodeWithoutRecurrsion(BST *tree, int data, char name[]) {
 	newNode->MIS = data;
 	strcpy(newNode->name, name);
 
-	printf("H1\n");
-
 	Node *parentNode = NULL;
 	Node *temp = *tree;
 
-	printf("H2\n");
 	while(temp != NULL) {
 		parentNode = temp;
 		if(temp->MIS == data) {
@@ -38,23 +35,17 @@ void insertNodeWithoutRecurrsion(BST *tree, int data, char name[]) {
 		else {
 			temp = temp->right;		
 		}
-		printf("H3\n");
 	}
 
-	printf("H4\n");
 	if(parentNode == NULL) {
 		*tree = newNode;
-		printf("H5\n");
 	}
 	else if(parentNode->MIS > data) {
 		parentNode->left = newNode;
-		printf("H6\n");
 	}
 	else{
 		parentNode->right = newNode;
-		printf("H7\n");
 	}
-	printf("H8\n");
 
 }
 
@@ -101,7 +92,11 @@ int search(BST tree, int MIS) { // to recursively search for a node with the giv
 void inorder(BST tree) {
         if(tree != NULL) {
  		inorder(tree->left);
- 		printf("\n MIS : %d, Name : %s", tree->MIS, tree->name);
+	 		printf("MIS : %d, Name : %s, Parent : NULL", tree->MIS, tree->name);
+ 		if(tree->parent)
+			printf(" Parent : %d \n", tree->parent->MIS);
+		else
+			printf(" Parent : NULL \n");
  		inorder(tree->right);
         }
 }
@@ -124,8 +119,8 @@ void postorder(BST tree) {
 
 void postorderNonRecursive(BST tree) {
 	if(tree != NULL){
-		List stack;
-		initList(&stack);
+		StackList stack;
+		initStack(&stack);
 		
 		BST current = tree;
 		while(current != NULL || stack != NULL) {

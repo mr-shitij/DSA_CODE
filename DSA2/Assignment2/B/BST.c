@@ -2,7 +2,6 @@
 #include<string.h>
 #include<stdlib.h>
 #include"BST.h"
-#include"LinkList.h"
 
 
 void initBST(BST *tree) {

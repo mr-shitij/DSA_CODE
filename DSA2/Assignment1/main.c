@@ -28,14 +28,12 @@ int main() {
 
 				// we are checking this condition because if root is null then we can directly assign newNode to it but if it is not
 				// then we have to create tempNode and then use it in recurrsion to insert new node so that reference to root not going to lost.
-				/*
 				tempTree = tree;
 				if(tree == NULL)
 					insertNode(&tree, &tempParentTree, data, name);
 				else
 					insertNode(&tempTree, &tempParentTree, data, name);
-				*/
-				insertNodeWithoutRecurrsion(&tree, data, name);
+				//insertNodeWithoutRecurrsion(&tree, data, name);
 				break;
 			case 2:
 				preorder(tree);

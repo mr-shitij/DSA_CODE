@@ -38,8 +38,32 @@ void _inorder(BST tree, int index) {
 	}
 }
 
-void recursive_traverse(BST tree) {
+void _preorder(BST tree, int index) {
+	if(tree != NULL && tree->array[index] != INT_MIN) {
+		printf("%d\n", tree->array[index]);
+		_inorder(tree, index * 2 + 1);
+		_inorder(tree, index * 2 + 2);
+	}
+}
+
+void _postorder(BST tree, int index) {
+	if(tree != NULL && tree->array[index] != INT_MIN) {
+		_inorder(tree, index * 2 + 1);
+		_inorder(tree, index * 2 + 2);
+		printf("%d\n", tree->array[index]);
+	}
+}
+
+void recursive_traverse_inorder(BST tree) {
 	_inorder(tree, 0);
+}
+
+void recursive_traverse_postorder(BST tree) {
+	_postorder(tree, 0);
+}
+
+void recursive_traverse_preorder(BST tree) {
+	_preorder(tree, 0);
 }
 
 int isComplete(BST tree) {
