@@ -1,10 +1,11 @@
-all: compile run
+CC=gcc
+TARGET=main 
 
-compile:
-	gcc main.c BST.c
-
-run:
-	./a.out
+all: main.o BST.o run
+	$(CC) main.c BST.c -o $(TARGET)
 
 clean:
-	rm -rfv *.o
+	rm -rvf *.o $(TARGET)
+
+run: main
+	./main

@@ -12,7 +12,8 @@ typedef Node* BST;
 void initBST(BST *tree);
 
 void add_node(BST *tree, int data);
-Node* generateFromTree(int data[], int start, int end);
+void generateFromTree(BST *tree, int data[], int end);
+//Node* generateFromTree(int data[], int start, int end);
 
 void insertNode(BST *tree, int data);
 void removeNode();

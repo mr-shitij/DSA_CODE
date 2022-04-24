@@ -13,7 +13,5 @@ void initStack(StackList *list);
 void push(StackList *list, void *data);
 int pop(StackList *list);
 
-
-void traverse(StackList list, void (*display_list)(void *));
 void* peek(StackList list);
 

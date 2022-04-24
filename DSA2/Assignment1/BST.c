@@ -266,11 +266,11 @@ void removeNode(BST *tree, int MIS) {
 	}
 }
 
-void destoryTree(BST tree) {
-	if(tree != NULL) {
-		destoryTree(tree->left);
-		destoryTree(tree->right);
-		free(tree);
+void destoryTree(BST *tree) {
+	if(*tree != NULL) {
+		destoryTree(&(*tree)->left);
+		destoryTree(&(*tree)->right);
+		free((*tree));
 	}
 }
 

@@ -1,10 +1,9 @@
-all: compile run
-
-run: 
-	./a.out
-
-compile:
-	gcc main.c BST.c Stack.c Queue.c
+compile: main.c BST.c
+	gcc $@
 
 clean:
 	rm -rvf *.o
+
+run: a.out
+	./a.out
+

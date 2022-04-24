@@ -39,14 +39,6 @@ void push(StackList *list, void *data) { // Insert At First
 	}
 }
 
-void traverse(StackList list, void (*display_list)(void *)) {
-	StackNode *point = list;
-	while(point != NULL) {
-		display_list(point->data);
-		point = point->next;
-	}
-}
-
 void* peek(StackList list) {
 	if(list == NULL)
 		return NULL;
