@@ -255,7 +255,7 @@ void removeNode(BST *tree, int MIS) {
 				parentOfMinNode->right = minNode->right;
 			else if(parentOfMinNode != NULL)
 				parentOfMinNode->left = minNode->right;
-	
+
 
 			crrentNode->MIS = minNode->MIS;
 			strcpy(minNode->name, crrentNode->name);
