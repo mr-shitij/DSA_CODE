@@ -34,7 +34,7 @@ AVL insert(AVL *tree, AVL *parentTree, int data, char name[]) {
 
 int getHeight(AVL tree) {
 	if(tree == NULL) {
-		return -1;
+		return 0;
 	}
 
 	int hl = getHeight(tree->left);
@@ -50,6 +50,7 @@ int getHeight(AVL tree) {
 void adjustBalanceFactor(AVL* tree) {
 	if((*tree)->parent != NULL) {
 		int balanceFactor = getHeight((*tree)->left) - getHeight((*tree)->right);
+		printf("Adjust MIS : %d ,  BF : %d  \n", (*tree)->MIS, (*tree)->balanceFactor);
 		(*tree)->balanceFactor = balanceFactor;
 		adjustBalanceFactor(&((*tree)->parent));
 	}
@@ -64,6 +65,7 @@ void rotateLeft(AVL* nodeA) {
 	nodeB->left = *nodeA;	
 }
 
+
 void rotateRight(AVL* nodeA) {
 	AVL nodeB = (*nodeA)->left;
 	(nodeB)->parent = (*nodeA)->parent;
@@ -71,6 +73,20 @@ void rotateRight(AVL* nodeA) {
 	
 	(*nodeA)->left = nodeB->right;
 	nodeB->right = *nodeA;
+}
+
+AVL findImBalanceNode(AVL tree) {
+	if(tree != NULL){
+		if(tree->balanceFactor > 1 || tree->balanceFactor < -1) {
+			printf("Found Inbalance Node ..!!\n");
+			return tree;
+		}
+		else {
+			printf("Finding New Inbalance Node ..!!\n");
+			findImBalanceNode(tree->parent);
+		}
+	}
+	return NULL;
 }
 
 void insertNode(AVL *tree, int data, char name[]) {
@@ -83,27 +99,36 @@ void insertNode(AVL *tree, int data, char name[]) {
 		insertedNode = insert(&tempTree, &tempParentTree, data, name);
 
 	adjustBalanceFactor(&insertedNode);
-	if(insertedNode->balanceFactor > 1 && insertedNode->left->balanceFactor == 1) {
-		rotateLeft(&insertedNode);
+	
+	AVL imbalanceNode = findImBalanceNode(insertedNode);
+	while(imbalanceNode != NULL) {
+		if(imbalanceNode->balanceFactor > 1 && imbalanceNode->left->balanceFactor == 1) {
+			printf("Rotating : Left");
+			rotateLeft(&imbalanceNode);
+		}
+		else if(imbalanceNode->balanceFactor > 1 && imbalanceNode->left->balanceFactor == -1) {
+			printf("Rotating : Left, Right");
+			rotateLeft(&imbalanceNode);
+			rotateRight(&imbalanceNode);		
+		}
+		else if(imbalanceNode->balanceFactor < -1 && imbalanceNode->right->balanceFactor == -1) {
+			printf("Rotating : Right");
+			rotateRight(&imbalanceNode);
+		}
+		else if(imbalanceNode->balanceFactor < -1 && imbalanceNode->right->balanceFactor == 1) {
+			printf("Rotating : Right, Left");
+			rotateRight(&imbalanceNode);
+			rotateLeft(&imbalanceNode);
+		}
+		imbalanceNode = findImBalanceNode(insertedNode);
+		adjustBalanceFactor(&imbalanceNode);
 	}
-	else if(insertedNode->balanceFactor > 1 && insertedNode->left->balanceFactor == -1) {
-		rotateLeft(&insertedNode);
-		rotateRight(&insertedNode);		
-	}
-	else if(insertedNode->balanceFactor < -1 && insertedNode->right->balanceFactor == -1) {
-		rotateRight(&insertedNode);		
-	}
-	else if(insertedNode->balanceFactor < -1 && insertedNode->right->balanceFactor == 1) {
-		rotateRight(&insertedNode);		
-		rotateLeft(&insertedNode);
-	}
-	adjustBalanceFactor(&insertedNode);
 }
 
 void traverse(AVL tree) {
         if(tree != NULL) {
+		printf("MIS : %d ,  BF : %d , HE : %d \n", tree->MIS, tree->balanceFactor, getHeight(tree));
  		traverse(tree->left);
-		printf("%d  :  %d \n", tree->MIS, tree->balanceFactor);
  		traverse(tree->right);
         }
 }

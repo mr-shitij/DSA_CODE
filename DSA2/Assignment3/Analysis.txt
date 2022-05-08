@@ -1,0 +1,13 @@
+
+char* convertToPostFix(char* inputString, int size);
+ANALYSIS: The complexity of this function is based on the size of the string; As we are using the stack to convert the string into postfix expression; Time Complexity = O(n); n = size of input string. 
+
+void initTree(EXT *tree, char *inputString, int size);
+ANALYSIS: First of all we convert the infix expression to the postfix expression which has complexity of O(n); after that we are constructing the expression tree by using stack which has O(1) complexity and the number of operations is depends on size of input string so the complexity is O(n); n = size of input string. So total complexity of the function is O(n) + O(n) = O(2n).
+
+void traverse(EXT tree);
+ANALYSIS: The complexity of this function is based on the number of nodes so the complexity is O(n); n=no. of nodes.
+
+int compute(EXT tree);
+ANSLYSIS: The complexity of this function is based on the number of nodes so the complexity is O(n); n=no. of nodes.
+
