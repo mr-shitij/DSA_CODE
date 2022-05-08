@@ -2,10 +2,19 @@
 #include"BST.h"
 
 int main() {
-	int data[] = {5, 3, 7, 9, 13, 11, 19, 17, 21};
-//	BST tree = generateFromTree(data, 0, (sizeof(data) / sizeof(int)) - 1);
-	BST tree;
-	generateFromTree(&tree, data, (sizeof(data) / sizeof(int)) - 1);
+	int size;
+	printf("\n Enter the Size Of Data : ");
+	scanf("%d", &size);
+
+	int data[size];
+	int i = 0;
+	while(i < size) {
+		printf("\n Enter the Data : ");
+		scanf("%d", &data[i]);
+		i++;
+	}
+	
+	BST tree = generateFromTree(data, 0, size - 1);
 	inorder(tree);
 	return 0;
 }
