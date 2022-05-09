@@ -105,8 +105,14 @@ char* convertToPostFix(char* inputString, int size) {
 	return postfix;
 }
 
+void disp(char* str) {
+	while(*str != '\0') {
+		printf("%c", *str);
+		str++;
+	}
+}
+
 void initTree(EXT *tree, char* inputString, int size) {
-	//convertToPostFix;
 	inputString = convertToPostFix(inputString, size);
 
 	int index = 0;

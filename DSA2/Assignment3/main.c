@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include<strings.h>
+#include <string.h>
 #include"BST.h"
 
 int main() {
