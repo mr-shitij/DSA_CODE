@@ -19,8 +19,9 @@ class TIME:
 		for i in range(len(self.questions)):
 			print(self.questions[i])
 			ip = input()
-			if self.ans_type[i] == "float":
+			if ip.isnumeric() and self.ans_type[i] == "float":
 				ip = float(ip)
+				print("casted")
 			if type(ip).__name__ != self.ans_type[i]:
 				raise INVALID_TYPE("Invalid Input ..!!")
 			else:
