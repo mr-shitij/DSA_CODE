@@ -2,14 +2,16 @@ CC=gcc
 TARGET=main 
 
 all: try run
-try: main.o BHE.o
-	$(CC) main.o BHE.o -o $(TARGET)
-main.o: main.c BHE.h
+try: main.o GEN.o BHE.o
+	$(CC) main.o GEN.o BHE.o -o $(TARGET)
+main.o: main.c BHE.h GEN.h
 	$(CC) -c main.c
-AVL.o: BHE.c BHE.h
+GEN.o: GEN.h GEN.c
+	$(CC) -c GEN.c
+BHE.o: BHE.h BHE.c
 	$(CC) -c BHE.c
 run: $(TARGET)
-	./$(TARGET)
+	./$(TARGET) data
 clean:
 	rm -rvf *.o $(TARGET)
 

@@ -1,19 +1,19 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-#define NAME_SIZE 20
+#define MAX_RAND 10
 
-typedef struct Node {
-	struct Node* left;
-	struct Node* right;
-	struct Node* parent;
-	int data;
-}Node;
-typedef Node* BHE;
+typedef struct Heap {
+	int *arr;
+	int size;
+	int rear;
+} Heap;
 
-void initBHE(BHE *tree);
-void insertNode(BHE *tree, int data);
-void removeNode();
-void traverse(BHE tree);
-void destoryTree();
+void init_heap(Heap *heap, int size);
+void insert_heap(Heap *heap, int data);
+void delete_heap(Heap *heap);
+void traverse(Heap heap);
+void heap_sort(Heap *heap);
+void build_heap(Heap* heap, char file_name[]);
+
 
