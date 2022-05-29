@@ -13,7 +13,5 @@ void init_heap(Heap *heap, int size);
 void insert_heap(Heap *heap, int data);
 void delete_heap(Heap *heap);
 void traverse(Heap heap);
-void heap_sort(Heap *heap);
 void build_heap(Heap* heap, char file_name[]);
-
 

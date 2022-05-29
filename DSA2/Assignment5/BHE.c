@@ -71,16 +71,6 @@ void delete_heap(Heap* heap) {
 	heapify_td(heap);
 }
 
-void heap_sort(Heap* heap) {
-    while (heap->rear != -1) {
-        delete_heap(heap);
-    }
-
-    for (int i = 0; i < heap->size; i++) {
-        heap->rear++;
-    }
-}
-
 void get_data_from_file(char file_name[], Heap *heap) {
 	int data;
 	FILE* fp = fopen(file_name, "r");

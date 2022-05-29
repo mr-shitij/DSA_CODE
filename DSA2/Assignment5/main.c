@@ -2,6 +2,8 @@
 #include"BHE.h"
 #include"GEN.h"
 
+void heap_sort(Heap *heap);
+
 int main(int args, char* arg[]) {
 	int choice, size, num;
 	Heap heap;
@@ -13,12 +15,28 @@ int main(int args, char* arg[]) {
 	}
 
 	generate_random_data(arg[1], MAX_RAND);
+
+	printf("\n\n Randomely Generated : ");
 	print_data(arg[1]);
 	
 	build_heap(&heap, arg[1]);
+	
+	printf("\n\n Sorted Data : ");
+	traverse(heap);
 
 	return 0;
 }
+
+void heap_sort(Heap* heap) {
+    while (heap->rear != -1) {
+        delete_heap(heap);
+    }
+
+    for (int i = 0; i < heap->size; i++) {
+        heap->rear++;
+    }
+}
+
 
 /*
 	while(1) {
