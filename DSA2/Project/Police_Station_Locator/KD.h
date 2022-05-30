@@ -12,4 +12,7 @@ void insert(KDTree* tree, int point[]);
 unsigned search(KDTree tree, int point[]);
 void traverse(KDTree tree);
 void deleteNode(KDTree* tree, int point[]);
+void NearestNeighbour(KDTree tree, int point[], int distance, int negibhourSought);
+
+
 

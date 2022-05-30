@@ -135,4 +135,9 @@ KDTree deleteNodeRec(KDTree tree, int point[], int depth) {
 void deleteNode(KDTree* tree, int point[]) {
 	*tree = deleteNodeRec(*tree, point, 0);
 }
+
+void NearestNeighbour(KDTree tree, int point[], int distance, int negibhourSought) {
+
+}
+
 //*/
