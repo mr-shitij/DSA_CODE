@@ -57,6 +57,30 @@ unsigned search(KDTree tree, int point[]) {
 	return searchRecurrsively(tree, point, 0);
 }
 
+void traverse(KDTree tree) {
+	if(tree != NULL) {
+		traverse(tree->left);
+		printf("\n %d : %d", tree->point[0], tree->point[1]);
+		traverse(tree->right);
+	} 
+}
+
+
+///*
+KDTree minNode(KDTree x, KDTree y, KDTree z, int d) {
+    KDTree res = x;
+    if (y != NULL && y->point[d] < res->point[d])
+       res = y;
+    if (z != NULL && z->point[d] < res->point[d])
+       res = z;
+    return res;
+}
+
+void copyPoint(int p1[], int p2[]) {
+	for (int i=0; i<DIMENSION; i++)
+		p1[i] = p2[i];
+}
+
 KDTree findMinRec(KDTree tree, int d, unsigned depth) {
 	if (tree == NULL)
 		return NULL;
@@ -79,7 +103,7 @@ KDTree deleteNodeRec(KDTree tree, int point[], int depth) {
 		return NULL;
 
 	int currentDepth = depth % DIMENSION;
-	if (arePointsSame(tree->point, point)) {	
+	if (arePointsSame(tree->point, point)) {
 		if (tree->right != NULL) {
 			KDTree min = findMin(tree->right, currentDepth);
 			copyPoint(tree->point, min->point);
@@ -109,6 +133,6 @@ KDTree deleteNodeRec(KDTree tree, int point[], int depth) {
 }
 
 void deleteNode(KDTree* tree, int point[]) {
-	tree = deleteNodeRec(*tree, point, 0);
+	*tree = deleteNodeRec(*tree, point, 0);
 }
-
+//*/
