@@ -3,13 +3,10 @@ from tkinter.ttk import *
 
 m = Tk()
 
-l1 = Label(m, text = "First:")
-l2 = Label(m, text = "Second:")
- 
-l1.configure(background='black')
-l2.configure(background='red')
- 
-l1.grid(row = 0, column = 0, sticky = W, pady = 2)
-l2.grid(row = 1, column = 0, sticky = W, pady = 2)
+l1 = Label(m, text = "First:", background='black')
+l2 = Label(m, text = "Second:", background='red')
+
+l1.place(m, x=0, y=0)
+l1.place(m, x=100, y=0)
 
 m.mainloop()

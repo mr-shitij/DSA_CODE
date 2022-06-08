@@ -1,4 +1,5 @@
 import datetime
+import time
 
 class INVALID_TYPE(Exception):
     def __init__(self, value):
@@ -16,21 +17,26 @@ class TIME:
 	def start_exam(self):
 		self.start = datetime.datetime.now()
 		uans = []
-		for i in range(len(self.questions)):
-			print(self.questions[i])
-			ip = input()
-			if ip.isnumeric() and self.ans_type[i] == "float":
-				ip = float(ip)
-				print("casted")
-			if type(ip).__name__ != self.ans_type[i]:
-				raise INVALID_TYPE("Invalid Input ..!!")
-			else:
-				if self.ans[i] == ip:
-					print("correct ..!!")
+		i = 0
+		while i < len(self.questions):
+			try:
+				print(self.questions[i])
+				ip = input()
+				if ip.isnumeric() and self.ans_type[i] == "float":
+					ip = float(ip)
+				if type(ip).__name__ != self.ans_type[i]:
+					raise INVALID_TYPE("Invalid Input ..!!")
 				else:
-					print("wrong ..!!")
-
+					if self.ans[i] == ip:
+						print("correct ..!!")
+					else:
+						print("wrong ..!!")
+				i = i + 1
+			except:
+				print("Invallid Input ..!!")
 		self.end = datetime.datetime.now()
+		print("Start Time in : {}  sec", format(self.start.second))
+		print("End Time in : {}  sec", format(self.end.second))
 		print("You passed exam in : {}  sec", format((self.end - self.start).total_seconds()))
 
 TIME().start_exam()
