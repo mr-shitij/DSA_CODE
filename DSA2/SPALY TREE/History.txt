@@ -1,0 +1,42 @@
+
+Thu Jul 22 19:01:48 2021
+
+	London is a? 
+		>>18:55:46	frequency: 0
+	Mars is a? 
+		>>18:47:43	frequency: 0
+	where is London? 
+		>>19:58:10	frequency: 0
+	how to go to pl? 
+		>>19:32:07	frequency: 1
+	what is today? 
+		>>19:33:13	frequency: 0
+	how to go to moon? 
+		>>19:32:14	frequency: 1
+	what is my name? 
+		>>19:55:12	frequency: 0
+	where is kashmir? 
+		>>20:12:26	frequency: 0
+
+Sun Jul 25 15:07:17 2021
+
+	who is Elon musk? 
+		>>15:05:58	frequency: 0
+	where are you? 
+		>>14:52:52	frequency: 0
+	Mars is a? 
+		>>18:47:43	frequency: 2
+	London is a? 
+		>>18:55:46	frequency: 0
+	what is today? 
+		>>19:33:13	frequency: 0
+	how to go to pl? 
+		>>19:32:07	frequency: 1
+	how to go to moon? 
+		>>19:32:14	frequency: 1
+	what is my name? 
+		>>19:55:12	frequency: 0
+	where is London? 
+		>>19:58:10	frequency: 0
+	where is kashmir? 
+		>>20:12:26	frequency: 0

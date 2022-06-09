@@ -10,9 +10,8 @@ typedef Node* KDTree;
 void init_KDTree(KDTree* tree);
 void insert(KDTree* tree, int point[]);
 unsigned search(KDTree tree, int point[]);
-void traverse(KDTree tree);
 void deleteNode(KDTree* tree, int point[]);
-void NearestNeighbour(KDTree tree, int point[], int distance, int negibhourSought);
-
-
+Node* nearestNeighbor(KDTree tree, int target[]);
+void nearestNeighborInRadius(KDTree tree, int target[], int radius);
+void traverse(KDTree tree);
 
