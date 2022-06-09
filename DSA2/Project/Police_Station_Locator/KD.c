@@ -182,7 +182,6 @@ Node* nearestNeighborRecur(Node* root, int target[], int depth) {
 	Node* nextBranch = NULL;
 	Node* otherBranch = NULL;
 
-	// compare the property appropriate for the current depth
 	if (target[depth % DIMENSION] < root->point[depth % DIMENSION]) {
 		nextBranch = root->left;
 		otherBranch = root->right;
@@ -191,19 +190,11 @@ Node* nearestNeighborRecur(Node* root, int target[], int depth) {
 		otherBranch = root->left;
 	}
 
-	// recurse down the branch that's best according to the current depth
 	Node* temp = nearestNeighborRecur(nextBranch, target, depth + 1);
 	Node* best = closest(temp, root, target);
 
 	long radiusSquared = distSquared(target, best->point);
-
-	/*
-	* We may need to check the other side of the tree. If the other side is closer than the radius,
-	* then we must recurse to the other side as well. 'dist' is either a horizontal or a vertical line
-	* that goes to an imaginary line that is splitting the plane by the root point.
-	*/
 	long dist = target[depth % DIMENSION] - root->point[depth % DIMENSION];
-
 	if (radiusSquared >= dist * dist) {
 		temp = nearestNeighborRecur(otherBranch, target, depth + 1);
 		best = closest(temp, best, target);
@@ -212,51 +203,35 @@ Node* nearestNeighborRecur(Node* root, int target[], int depth) {
 	return best;
 }
 
-Node* nearestNeighborInRadiusRecur(Node* root, int target[], int radius, int depth) {
+int isInCircle(int cx, int cy, int r, int px, int py) {
+	int fact = ((cx - px) * (cx - px)) + ((cy - py) * (cy - py));
+//	printf("FACT : %d ", fact);
+	if(fact < (r * r))
+		return 1;
+	return 0;
+}
+
+void pointsInCircle2D(KDTree root, int circle[], int radius, int depth) {
 	if (root == NULL) return NULL;
 
-	Node* nextBranch = NULL;
-	Node* otherBranch = NULL;
+//	printf("raduis : %d, circle( %d : %d ), root( %d : %d ) ", radius, circle[0], circle[1], root->point[0], root->point[1]);
+	int is = isInCircle(circle[0], circle[1], radius, root->point[0], root->point[1]);
+//	printf("In Circle : %d \n", is);
 
-	// compare the property appropriate for the current depth
-	if (target[depth % DIMENSION] < root->point[depth % DIMENSION]) {
-		nextBranch = root->left;
-		otherBranch = root->right;
-	} else {	    
-		nextBranch = root->right;
-		otherBranch = root->left;
-	}
-
-	// recurse down the branch that's best according to the current depth
-	Node* temp = nearestNeighborInRadiusRecur(nextBranch, target, radius, depth + 1);
-	Node* best = closest(temp, root, target);
-	printf("Nearest : { %d : %d } \n", best->point[0], best->point[1]);
-
-	long radiusSquared = distSquared(target, best->point);
-	printf("radiusSquared : { %d } \n", radiusSquared);
-
-	/*
-	* We may need to check the other side of the tree. If the other side is closer than the radius,
-	* then we must recurse to the other side as well. 'dist' is either a horizontal or a vertical line
-	* that goes to an imaginary line that is splitting the plane by the root point.
-	*/
-	long dist = target[depth % DIMENSION] - root->point[depth % DIMENSION];
-
-	if (radiusSquared >= dist * dist && radius * radius < radiusSquared) {
-		temp = nearestNeighborInRadiusRecur(otherBranch, target, radius, depth + 1);
-		best = closest(temp, best, target);
-		
-		printf("Nearest : { %d : %d } \n", best->point[0], best->point[1]);
+	if(is) {
+		printf("%d : %d \n", root->point[0], root->point[1]);
 		
 	}
-
-	return best;	
+	if(circle[depth % DIMENSION] > root->point[depth % DIMENSION]) {
+		pointsInCircle2D(root->left, circle, radius, depth + 1);
+	}
+	else {
+		pointsInCircle2D(root->right, circle, radius, depth + 1);
+	}
 }
 
-void nearestNeighborInRadius(KDTree tree, int target[], int radius) {
-	nearestNeighborInRadiusRecur(tree, target, radius, 0);
+void nearestNeighborInRadius(KDTree tree, int circle[], int radius) {
+	pointsInCircle2D(tree, circle, radius, 0);
 }
 
 
-
- 
