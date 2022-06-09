@@ -8,7 +8,7 @@ void generateRandomPoints(int n, int maxx, int maxy) {
 	while(n != 0) {
 		int numx = rand() % maxx + 1;
 		int numy = rand() % maxy + 1;
-		fprintf(fp, "%d , %d\n", numx, numy);
+		fprintf(fp, "%d,%d\n", numx, numy);
 		n--;
 	}
 	fclose(fp);
@@ -81,10 +81,16 @@ int main() {
 	nearestNeighborInRadius(tree, point, 7);
 	*/
 	
-	generateRandomPoints(100, 255, 255);
+	generateRandomPoints(10, 10, 10);
+	int point[] = {5, 5};
 	KDTree tree = getRandomPoints();
 
-	traverse(tree);
+	Node* node = nearestNeighbor(tree, point);
+	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
+
+	nearestNeighborInRadius(tree, point, 2);
+
+//	traverse(tree);
 	
 	return 0;
 }
