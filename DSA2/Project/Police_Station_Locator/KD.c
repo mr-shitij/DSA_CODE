@@ -203,9 +203,10 @@ Node* nearestNeighborRecur(Node* root, int target[], int depth) {
 	return best;
 }
 
-int isInCircle(int cx, int cy, int r, int px, int py) {
-	int fact = ((cx - px) * (cx - px)) + ((cy - py) * (cy - py));
-//	printf("FACT : %d ", fact);
+int isInCircle(int h, int k, int r, int x, int y) {
+//	int fact = ((cx - px) * (cx - px)) + ((cy - py) * (cy - py));
+	int fact = (x*x) - (2*h*x) + (h*h) + (y*y) - (2*k*y) + (k*k);
+	printf("FACT : %d ", fact);
 	if(fact < (r * r))
 		return 1;
 	return 0;
@@ -214,19 +215,28 @@ int isInCircle(int cx, int cy, int r, int px, int py) {
 void pointsInCircle2D(KDTree root, int circle[], int radius, int depth) {
 	if (root == NULL) return NULL;
 
-//	printf("raduis : %d, circle( %d : %d ), root( %d : %d ) ", radius, circle[0], circle[1], root->point[0], root->point[1]);
+	printf("raduis : %d, circle( %d : %d ), root( %d : %d ) ", radius, circle[0], circle[1], root->point[0], root->point[1]);
 	int is = isInCircle(circle[0], circle[1], radius, root->point[0], root->point[1]);
-//	printf("In Circle : %d \n", is);
+	printf("In Circle : %d \n", is);
 
 	if(is) {
 		printf("%d : %d \n", root->point[0], root->point[1]);
 		
 	}
-	if(circle[depth % DIMENSION] > root->point[depth % DIMENSION]) {
-		pointsInCircle2D(root->left, circle, radius, depth + 1);
-	}
-	else {
-		pointsInCircle2D(root->right, circle, radius, depth + 1);
+	if(depth % DIMENSION == 0) { //x
+		if(circle[depth % DIMENSION] + radius < root->point[depth % DIMENSION]) {
+			pointsInCircle2D(root->left, circle, radius, depth + 1);
+		}
+		else {
+			pointsInCircle2D(root->right, circle, radius, depth + 1);
+		}		
+	} else { //y
+		if(circle[depth % DIMENSION] + radius < root->point[depth % DIMENSION]) {
+			pointsInCircle2D(root->left, circle, radius, depth + 1);
+		}
+		else {
+			pointsInCircle2D(root->right, circle, radius, depth + 1);
+		}
 	}
 }
 

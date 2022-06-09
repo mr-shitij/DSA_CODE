@@ -41,7 +41,10 @@ int main() {
 	Node* node = nearestNeighbor(tree, point);
 	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
 
-	nearestNeighborInRadius(tree, point, 2);
+	nearestNeighborInRadius(tree, point, 7);
+
+	return 0;
+}
 
 
 /*
@@ -95,6 +98,4 @@ int main() {
 		}
 	}
 */
-	return 0;
-}
 
