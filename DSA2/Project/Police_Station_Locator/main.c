@@ -14,7 +14,7 @@ void generateRandomPoints(int n, int maxx, int maxy) {
 	fclose(fp);
 }
 
-KDTree* getRandomPoints() {
+KDTree getRandomPoints() {
 	KDTree tree;
 	initKDTree(&tree);
 	int point[DIMENSION];
@@ -38,57 +38,14 @@ KDTree* getRandomPoints() {
 }
 
 int main() {
-	/*
-	int choice = 0;
-	KDTree tree;
-	initKDTree(&tree);
-	
-	int point[DIMENSION];
-
-	point[0] = 3;
-	point[1] = 3;
-	insert(&tree, point);
-
-	point[0] = -5;
-	point[1] = 6;
-	insert(&tree, point);
-
-	point[0] = -4;
-	point[1] = -4;
-	insert(&tree, point);
-
-	point[0] = 4;
-	point[1] = 1;
-	insert(&tree, point);
-	
-	point[0] = 6;
-	point[1] = 5;
-	insert(&tree, point);
-	
-	point[0] = 6;
-	point[1] = 3;
-	insert(&tree, point);
-	
-	point[0] = 7;
-	point[1] = 3;
-	insert(&tree, point);
-
-	point[0] = 2;
-	point[1] = 2;
-	Node* node = nearestNeighbor(tree, point);
-	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
-
-	nearestNeighborInRadius(tree, point, 7);
-	*/
-	
-	generateRandomPoints(10, 10, 10);
-	int point[] = {5, 5};
+	generateRandomPoints(100, 500, 500);
+	int point[] = {200, 200};
 	KDTree tree = getRandomPoints();
 
-	Node* node = nearestNeighbor(tree, point);
-	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
+//	Node* node = nearestNeighbor(tree, point);
+//	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
 
-	nearestNeighborInRadius(tree, point, 2);
+	nearestNeighborInRadius(tree, point, 30);
 
 //	traverse(tree);
 	

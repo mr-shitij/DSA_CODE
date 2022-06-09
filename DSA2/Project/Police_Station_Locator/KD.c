@@ -210,7 +210,7 @@ int isInCircle(int h, int k, int r, int x, int y) {
 }
 
 void pointsInCircle2D(KDTree root, int circle[], int radius, int depth) {
-	if (root == NULL) return NULL;
+	if (root == NULL) return;
 
 //	printf("raduis : %d, circle( %d : %d ), root( %d : %d ) ", radius, circle[0], circle[1], root->point[0], root->point[1]);
 	int is = isInCircle(circle[0], circle[1], radius, root->point[0], root->point[1]);
