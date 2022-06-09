@@ -7,7 +7,7 @@ typedef struct Node {
 }Node;
 typedef Node* KDTree;
 
-void init_KDTree(KDTree* tree);
+void initKDTree(KDTree* tree);
 void insert(KDTree* tree, int point[]);
 unsigned search(KDTree tree, int point[]);
 void deleteNode(KDTree* tree, int point[]);

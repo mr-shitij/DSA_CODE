@@ -1,10 +1,47 @@
 #include<stdio.h>
+#include<stdlib.h>
 #include"KD.h"
 
+void generateRandomPoints(int n, int maxx, int maxy) {
+	FILE* fp = fopen("data.txt", "w");
+	fprintf(fp, "%d\n", n);
+	while(n != 0) {
+		int numx = rand() % maxx + 1;
+		int numy = rand() % maxy + 1;
+		fprintf(fp, "%d , %d\n", numx, numy);
+		n--;
+	}
+	fclose(fp);
+}
+
+KDTree* getRandomPoints() {
+	KDTree tree;
+	initKDTree(&tree);
+	int point[DIMENSION];
+
+	int n;
+	FILE* fp = fopen("data.txt", "r");
+	fscanf(fp, "%d\n", &n);
+
+	while(n != 0) {
+		int numx, numy;
+		fscanf(fp, "%d , %d\n", &numx, &numy);
+	
+		point[0] = numx;
+		point[1] = numy;
+		insert(&tree, point);	
+
+		n--;
+	}
+	fclose(fp);
+	return tree;
+}
+
 int main() {
+	/*
 	int choice = 0;
 	KDTree tree;
-	init_KDTree(&tree);
+	initKDTree(&tree);
 	
 	int point[DIMENSION];
 
@@ -42,7 +79,13 @@ int main() {
 	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);
 
 	nearestNeighborInRadius(tree, point, 7);
+	*/
+	
+	generateRandomPoints(100, 255, 255);
+	KDTree tree = getRandomPoints();
 
+	traverse(tree);
+	
 	return 0;
 }
 

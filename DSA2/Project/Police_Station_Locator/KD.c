@@ -15,7 +15,7 @@ int Pow(int X, int Y) {
 	return power;
 }
 
-void init_KDTree(KDTree* tree) {
+void initKDTree(KDTree* tree) {
 	*tree = NULL;
 }
 
