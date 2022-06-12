@@ -1,46 +1,27 @@
 #include<stdio.h>
-#include<stdlib.h>
 #include"KD.h"
+#include"randomGenrator.h"
 
-void generateRandomPoints(int n, int maxx, int maxy) {
-	FILE* fp = fopen("data.txt", "w");
-	fprintf(fp, "%d\n", n);
-	while(n != 0) {
-		int numx = rand() % maxx + 1;
-		int numy = rand() % maxy + 1;
-		fprintf(fp, "%d,%d\n", numx, numy);
-		n--;
+int main(int argc, char* argv[]) {
+
+/*
+	switch(argc) {
+		case 0:
+		case 1:
+			printf("\n Please Pass The requried arguments ..!!");
+			break;
+		case 2:
+			printf("\n Findig The ");
+			break;
+			
 	}
-	fclose(fp);
-}
 
-KDTree getRandomPoints() {
-	KDTree tree;
-	initKDTree(&tree);
-	int point[DIMENSION];
+*/
 
-	int n;
-	FILE* fp = fopen("data.txt", "r");
-	fscanf(fp, "%d\n", &n);
-
-	while(n != 0) {
-		int numx, numy;
-		fscanf(fp, "%d , %d\n", &numx, &numy);
-	
-		point[0] = numx;
-		point[1] = numy;
-		insert(&tree, point);	
-
-		n--;
-	}
-	fclose(fp);
-	return tree;
-}
-
-int main() {
-	generateRandomPoints(100, 500, 500);
+	char fileName[] = "data.txt";
+	generateRandomPoints(fileName, 100, 500, 500);
 	int point[] = {200, 200};
-	KDTree tree = getRandomPoints();
+	KDTree tree = getRandomPoints(fileName);
 
 //	Node* node = nearestNeighbor(tree, point);
 //	printf("Nearest Node is : { %d : %d } \n", node->point[0], node->point[1]);

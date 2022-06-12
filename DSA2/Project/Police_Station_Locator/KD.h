@@ -1,5 +1,7 @@
 #include<stdio.h>
 
+#define _KD
+
 #define DIMENSION 2
 typedef struct Node {
 	int point[DIMENSION];
@@ -14,4 +16,6 @@ void deleteNode(KDTree* tree, int point[]);
 Node* nearestNeighbor(KDTree tree, int target[]);
 void nearestNeighborInRadius(KDTree tree, int target[], int radius);
 void traverse(KDTree tree);
+void writeToFile(char* fileName, KDTree tree);
+KDTree readFromFile(char* fileName);
 

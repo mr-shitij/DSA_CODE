@@ -241,4 +241,12 @@ void nearestNeighborInRadius(KDTree tree, int circle[], int radius) {
 	pointsInCircle2D(tree, circle, radius, 0);
 }
 
+void writeToFile(char* fileName, KDTree tree) {
+	
+}
+
+KDTree readFromFile(char* fileName) {
+
+}
+
 
