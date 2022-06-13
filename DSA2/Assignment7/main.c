@@ -11,7 +11,8 @@ int main() {
 		printf("\n 2.Search");
 		printf("\n 3.Delete");
 		printf("\n 4.Display");
-		printf("\n 5.Exit");
+		printf("\n 5.Display Stream Wise");
+		printf("\n 6.Exit");
 		printf("\n Select Choice : ");
 		scanf("%d", &i);
 
@@ -60,9 +61,15 @@ int main() {
 				Display(fileName);
 				break;
 			case 5:
+				printf("\n Enter The File Name : ");
+				scanf("%s", fileName);
+
+				DisplayStreamWise(fileName);
+				break;
+			case 6:
 				break;
 		}
 		
-	} while (i != 5);
+	} while (i != 6);
 	return 0;
 }

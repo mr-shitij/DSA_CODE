@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 #include"FO.h"
 
 void InsertRecord(char* fileName, DataNode data) {
@@ -8,9 +9,7 @@ void InsertRecord(char* fileName, DataNode data) {
 		return;
 	}
 	
-	printf("HELLO\n\n\n");
 	fwrite(&data, sizeof(DataNode), 1, file);
-	printf("HELLOIIII\n\n\n");
 	fclose(file);
 }
 
@@ -64,19 +63,43 @@ void Delete(char* fileName, int mis) {
 
 void Display(char* fileName) {
 	FILE *file = fopen(fileName, "rb");
-	printf("HELLO\n\n");
 	if(file == NULL) {
-		printf("HELLO RET\n\n");
 		return;
 	}
 	
-	printf("HELLO DATA\n\n");
 	DataNode data;
 	while(fread(&data, sizeof(DataNode), 1, file)) {
-		printf("HELLO DAAAAA\n\n");
 		print(data);
 	}
 	fclose(file);
 }
+
+void DisplayStreamWise(char* fileName) {
+	FILE *file = fopen(fileName, "rb");
+	if(file == NULL) {
+		return;
+	}
+	
+	DataNode data;
+	int comp, mech, elec, instru;
+	comp = mech = elec = instru = 0;
+	while(fread(&data, sizeof(DataNode), 1, file)) {
+		if(strcmp("co", data.stream) == 0) {
+			comp++;
+		}
+		else if(strcmp("mech", data.stream) == 0) {
+			mech++;
+		}
+		else if(strcmp("elec", data.stream) == 0) {
+			elec++;
+		}
+		else if(strcmp("instru", data.stream) == 0) {
+			instru++;
+		}
+	}
+	printf("\n Computer : %d, Mechanical : %d, Electrical : %d, Instrument : %d", comp, mech, elec, instru);
+	fclose(file);
+}
+
 
 

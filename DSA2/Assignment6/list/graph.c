@@ -86,8 +86,6 @@ int get_indegree(Graph g, int node) {
 	return in;
 }
 
-//**
-
 int get_outdegree(Graph g, int node) {
 	int out = 0;
 	GraphNode* start = g;
