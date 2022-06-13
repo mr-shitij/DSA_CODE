@@ -1,7 +1,7 @@
 CC=gcc
 TARGET=main 
 
-all: try run
+all: try
 try: main.o KD.o randomGenrator.o
 	$(CC) main.o KD.o randomGenrator.o -o $(TARGET)
 main.o: main.c KD.h randomGenrator.h

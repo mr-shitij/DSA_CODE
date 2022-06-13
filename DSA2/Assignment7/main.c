@@ -1,21 +1,11 @@
 #include<stdio.h>
-#include"fileOperations.h"
 #include <stdlib.h>
-
-void initDataNode(DataNode* data) {
-	data->name = malloc(sizeof(char) * 10);
-	data->stream = malloc(sizeof(char) * 10);;
-	data->mis = 0;
-	data->cgpa = 0.0f;
-}
-
+#include"FO.h"
 
 int main() {
 	char fileName[10];
 	int i, mis;
 	DataNode data;
-	initDataNode(&data);
-	
 	do {
 		printf("\n 1.Insert");
 		printf("\n 2.Search");
