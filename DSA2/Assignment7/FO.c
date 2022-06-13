@@ -4,7 +4,7 @@
 
 void InsertRecord(char* fileName, DataNode data) {
 	FILE *file = fopen(fileName, "ab+");
-	if(file != NULL) {
+	if(file == NULL) {
 		return;
 	}
 	
@@ -20,7 +20,7 @@ void print(DataNode data) {
 
 void Search(char* fileName, int mis) {
 	FILE *file = fopen(fileName, "rb");
-	if(file != NULL) {
+	if(file == NULL) {
 		return;
 	}
 	
@@ -38,7 +38,7 @@ void Delete(char* fileName, int mis) {
 	FILE *fileToRead = fopen(fileName, "rb");
 	FILE *fileToWrite = fopen("_temp", "wb+");
 	
-	if(fileToRead != NULL || fileToWrite != NULL) {
+	if(fileToRead == NULL || fileToWrite == NULL) {
 		return;
 	}
 	
@@ -64,12 +64,16 @@ void Delete(char* fileName, int mis) {
 
 void Display(char* fileName) {
 	FILE *file = fopen(fileName, "rb");
-	if(file != NULL) {
+	printf("HELLO\n\n");
+	if(file == NULL) {
+		printf("HELLO RET\n\n");
 		return;
 	}
 	
+	printf("HELLO DATA\n\n");
 	DataNode data;
 	while(fread(&data, sizeof(DataNode), 1, file)) {
+		printf("HELLO DAAAAA\n\n");
 		print(data);
 	}
 	fclose(file);
