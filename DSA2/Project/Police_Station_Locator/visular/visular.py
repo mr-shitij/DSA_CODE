@@ -31,5 +31,8 @@ for i in range(len(x)):
 circle1 = plt.Circle((int(sys.argv[2]), int(sys.argv[3])), int(sys.argv[4]), color = 'r', fill = False)
 plt.gcf().gca().add_patch(circle1)
 
+circle2 = plt.Circle((int(sys.argv[2]), int(sys.argv[3])), 2, color = 'b', fill = True)
+plt.gcf().gca().add_patch(circle2)
+
 plt.show()
 
