@@ -217,7 +217,7 @@ void pointsInCircle2D(KDTree root, int circle[], int radius, int depth) {
 		printf("%d : %d \n", root->point[0], root->point[1]);		
 	}
 
-	if(circle[depth % DIMENSION] + radius < root->point[depth % DIMENSION]) {
+	if(circle[depth % DIMENSION] < root->point[depth % DIMENSION]) {
 		pointsInCircle2D(root->left, circle, radius, depth + 1);
 	}
 	else {
@@ -229,3 +229,26 @@ void nearestNeighborInRadius(KDTree tree, int circle[], int radius) {
 	pointsInCircle2D(tree, circle, radius, 0);
 }
 
+void pointsInCircleBrootForce2D(KDTree root, int circle[], int radius) {
+	if (root == NULL) return;
+
+	int is = isInCircle(circle[0], circle[1], radius, root->point[0], root->point[1]);
+
+	pointsInCircleBrootForce2D(root->left, circle, radius);
+
+	if(is) {
+		printf("%d : %d \n", root->point[0], root->point[1]);		
+	}
+
+	pointsInCircleBrootForce2D(root->right, circle, radius);
+}
+
+void nearestNeighborInRadiusBrootForce(KDTree tree, int circle[], int radius) {
+	pointsInCircleBrootForce2D(tree, circle, radius);
+}
+/*
+int main() {
+	printf("In Circle : %d", isInCircle(150, 120, 30, 135, 135));
+	return 0;
+}
+*/

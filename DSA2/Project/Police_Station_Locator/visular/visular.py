@@ -25,6 +25,9 @@ plt.title('Points')
 plt.xlabel('X')
 plt.ylabel('Y')
 
+for i in range(len(x)):
+	plt.annotate(" {} : {}".format(x[i], y[i]), (x[i], y[i]))
+
 circle1 = plt.Circle((int(sys.argv[2]), int(sys.argv[3])), int(sys.argv[4]), color = 'r', fill = False)
 plt.gcf().gca().add_patch(circle1)
 
