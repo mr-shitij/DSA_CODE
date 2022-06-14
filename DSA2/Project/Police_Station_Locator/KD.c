@@ -203,7 +203,7 @@ Node* nearestNeighborRecur(Node* root, int target[], int depth) {
 
 int isInCircle(int h, int k, int r, int x, int y) {
 	int fact = (x*x) - (2*h*x) + (h*h) + (y*y) - (2*k*y) + (k*k);
-	if(fact < (r * r))
+	if(fact <= (r * r))
 		return 1;
 	return 0;
 }
@@ -212,17 +212,15 @@ void pointsInCircle2D(KDTree root, int circle[], int radius, int depth) {
 	if (root == NULL) return;
 
 	int is = isInCircle(circle[0], circle[1], radius, root->point[0], root->point[1]);
-
-	if(is) {
+	if(is)
 		printf("%d : %d \n", root->point[0], root->point[1]);		
-	}
 
-	if(circle[depth % DIMENSION] < root->point[depth % DIMENSION]) {
+	if(circle[depth % DIMENSION] - radius < root->point[depth % DIMENSION]) {
 		pointsInCircle2D(root->left, circle, radius, depth + 1);
 	}
-	else {
+	if(circle[depth % DIMENSION] + radius > root->point[depth % DIMENSION]) {
 		pointsInCircle2D(root->right, circle, radius, depth + 1);
-	}		
+	}
 }
 
 void nearestNeighborInRadius(KDTree tree, int circle[], int radius) {
@@ -246,9 +244,3 @@ void pointsInCircleBrootForce2D(KDTree root, int circle[], int radius) {
 void nearestNeighborInRadiusBrootForce(KDTree tree, int circle[], int radius) {
 	pointsInCircleBrootForce2D(tree, circle, radius);
 }
-/*
-int main() {
-	printf("In Circle : %d", isInCircle(150, 120, 30, 135, 135));
-	return 0;
-}
-*/
