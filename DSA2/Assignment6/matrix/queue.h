@@ -3,10 +3,13 @@
 
 typedef struct Queue {
 	int* data;
-	int rear, frount, size;
+	int rear; 
+	int frount;
+	int size;
 }Queue;
 
-void (Queue* queue, int size);
+void init_queue(Queue* queue, int size);
 void enqueue(Queue *list, int data);
 int dequeue(Queue *list);
+int isEmptyQueue(Queue *queue);
 

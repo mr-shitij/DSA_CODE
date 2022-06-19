@@ -102,7 +102,8 @@ def main():
                 if keypoint_classifier_labels[hand_sign_id] == "OPEN" \
                         and handedness.classification[0].label[0:] == "Right" \
                         and process_start != 1:
-                    pro = subprocess.Popen("python3 ./weather.py", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+                    pro = subprocess.Popen("python3 ./weather.py", stdout=subprocess.PIPE, shell=True,
+                                           preexec_fn=os.setsid)
                     process_start = 1
                 elif keypoint_classifier_labels[hand_sign_id] == "CLOSE" \
                         and process_start == 1:

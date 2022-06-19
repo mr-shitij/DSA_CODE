@@ -2,17 +2,6 @@
 #include<stdlib.h>
 #include"queue.h"
 
-/*
-typedef struct Queue {
-	int* data;
-	int rear, frount, size;
-}Queue;
-
-void init_queue(Queue *queue);
-void enqueue(Queue *list, int data);
-int dequeue(Queue *list);
-
-*/
 void init_queue(Queue *queue, int size) {
 	queue->size = size;
 	queue->rear = queue->frount = -1;
@@ -20,7 +9,7 @@ void init_queue(Queue *queue, int size) {
 }
 
 void enqueue(Queue *queue, int data) {
-	if(rear == queue->size - 1)
+	if(queue->rear == queue->size - 1)
 		printf("\n Queue is full ..!!");
 	else {
 		if(queue->frount == -1)
@@ -31,16 +20,19 @@ void enqueue(Queue *queue, int data) {
 }
 
 int dequeue(Queue *queue) {
-	if(queue->frount == -1)
+	if(queue->frount == -1) {
 		printf("\n Queue is empty ..!!");
+		return -1;
+	}
 	else {
-		queue->frount++;
+		int data = queue->data[queue->frount++];
 		if(queue->frount > queue->rear)
 			queue->frount = queue->rear = -1;
+		return data;
 	}
 }
 
-int isEmpty(Queue *queue) {
+int isEmptyQueue(Queue *queue) {
 	if(queue->frount == -1)
 		return 1;
 	return 0;

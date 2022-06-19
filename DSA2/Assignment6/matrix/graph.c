@@ -1,6 +1,9 @@
 #include<stdio.h>
+#include<limits.h>
 #include"graph.h"
 #include"queue.h"
+#include"stack.h"
+#include"edges.h"
 
 void init_graph(Graph *g, char* fileName) {
 	FILE *fp;
@@ -58,25 +61,161 @@ int isDirected(Graph g) {
 }
 
 void depth_first_search(Graph g, int start) {
-	
+	int* visited = calloc(g.n, sizeof(int));
+	Stack stack;
+	init_stack(&stack, g.n * g.n);
+
+	push(&stack, start);
+	visited[start] = 1;
+
+	printf("\n");
+	while(!isEmptyStack(&stack)) {
+		int ele = pop(&stack);
+		printf("%d ", ele);
+		for(int i=0; i<g.n; i++) {
+			if(g.matrix[ele][i] && !visited[i]) {
+				push(&stack, i);
+				visited[i] = 1;
+			}
+		}
+	}	
 }
 
 void breath_first_search(Graph g, int start) {
 	int* visited = calloc(g.n, sizeof(int));
 	Queue queue;
-	init_queue(&queue, g.n);
+	init_queue(&queue, g.n * g.n);
+
 	enqueue(&queue, start);
-	
 	visited[start] = 1;
+
 	printf("\n%d ", start);
-	while(!isEmpty(&queue)) {
+	while(!isEmptyQueue(&queue)) {
 		int ele = dequeue(&queue);
 		for(int i=0; i<g.n; i++) {
 			if(g.matrix[ele][i] && !visited[i]) {
-				printf("%d ", i);
-				visited[i] = 1;
 				enqueue(&queue, i);
+				visited[i] = 1;
+				printf("%d ", i);
 			}
 		}
 	}
 }
+
+void _DFS(Graph g, int* visited, int start) {
+	Stack stack;
+	init_stack(&stack, g.n * g.n);
+	push(&stack, start);
+	visited[start] = 1;
+	while(!isEmptyStack(&stack)) {
+		int ele = pop(&stack);
+		printf("%d ", ele);
+		for(int i = 0; i < g.n; i++) {
+			if(g.matrix[ele][i] && !visited[i]) {
+				push(&stack, i);
+				visited[i] = 1;
+			}
+		}
+	}
+	printf("\n");
+}
+
+void get_components_of_graph(Graph g) {
+	int* visited = calloc(g.n, sizeof(int));
+	int components = 0;
+	for(int i = 0; i < g.n; i++) {
+		if(!visited[i]) {
+			_DFS(g, visited, i);
+			components++;
+		}
+	}
+	printf("Components Of Graph is : %d \n", components);
+}
+
+void prims(Graph g) {
+	int* visited = calloc(g.n, sizeof(int));
+	int mv = INT_MAX, me = INT_MAX;
+
+	visited[0] = 1;
+	printf(" %d", 0);
+
+	for(int k = 0; k < g.n - 1; k++) {
+		mv = INT_MAX, me = INT_MAX;
+		for(int i = 0; i < g.n - 1; i++) {
+			int mv_for_node = INT_MAX, me_for_node = INT_MAX;
+			if(visited[i]) {
+				for(int j = 0; j < g.n; j++) {
+					if(me_for_node > g.matrix[i][j] && g.matrix[i][j] != 0 && !visited[j]) {
+						me_for_node = g.matrix[i][j];
+						mv_for_node = j;
+					}
+				}
+				if(me > me_for_node) {
+					me = me_for_node;
+					mv = mv_for_node;
+				}
+			}
+		}
+		visited[mv] = 1;
+		printf(" %d", mv);
+	}
+}
+
+int findParent(int* parent_set, int node) {
+	if(parent_set[node] == node)
+		return node;
+	return findParent(parent_set, parent_set[node]);
+}
+
+// Works For Undirected Graph
+void krushkals(Graph graph) {
+	Edges* edges = malloc(graph.n * sizeof(Edges));
+	int c = 0;
+	for(int i = 0; i < graph.n; i++) {
+		for(int j = 0; j < graph.n; j++) {
+			if(i < j && graph.matrix[i][j] != 0) {
+				Edges* edge = malloc(sizeof(Edges));
+				edge->src = i;
+				edge->dest = j;
+				edge->weight = graph.matrix[i][j];
+				
+				edges[c] = *edge;
+				
+				c++;
+			}
+		}
+	}
+	for(int i = 0; i < c; i++) {		
+		for(int j = i + 1; j < c; j++) {
+			if(edges[i].weight > edges[j].weight) {
+				Edges tmp = edges[i];
+				edges[i] = edges[j];
+				edges[j] = tmp;
+			}
+		}
+	}
+	
+
+	// Initialize the set to its own value
+	int* parent_set = malloc(sizeof(int) * graph.n);
+	for(int i = 0; i < graph.n; i++) {		
+		parent_set[i] = i;
+	}	
+	
+	int count = 0;
+	int i = 0;
+	while(count != graph.n - 1) {
+		Edges edge = edges[i];
+		
+		int srcParent = findParent(parent_set, edge.src);
+		int destParent = findParent(parent_set, edge.dest);
+		
+		if(srcParent != destParent) {
+			printf("\n\nSRC : %d, DEST : %d, WEIGHT : %d,", edges[i].src, edges[i].dest, edges[i].weight);
+			parent_set[destParent] = srcParent;
+			count++;
+		}
+		i++;
+	}
+}
+
