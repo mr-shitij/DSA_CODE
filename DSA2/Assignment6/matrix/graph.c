@@ -219,6 +219,42 @@ void krushkals(Graph graph) {
 	}
 }
 
+int minDistance(Graph graph, int dist[], int sptSet[]) {
+	int min = INT_MAX, min_index;
 
+	for (int v = 0; v < graph.n; v++)
+		if (sptSet[v] == 0 && dist[v] <= min) {
+			min = dist[v];
+			min_index = v;
+		}
 
+	return min_index;
+}
+ 
+void printSolution(Graph graph, int dist[]) {
+	printf("Vertex \t\t Distance from Source\n");
+	for (int i = 0; i < graph.n; i++)
+		printf("%d \t\t %d\n", i, dist[i]);
+}
+ 
+void dijkstra(Graph graph, int src) {
+	int distance[graph.n];
+	int sptSet[graph.n];
+
+	for (int i = 0; i < graph.n; i++) {
+		distance[i] = INT_MAX;
+		sptSet[i] = 0;
+	}
+	distance[src] = 0;
+
+	for (int count = 0; count < graph.n - 1; count++) {
+		int u = minDistance(graph, dist, sptSet);
+
+		sptSet[u] = 1;
+		for (int v = 0; v < graph.n; v++)
+			if (!sptSet[v] && graph.matrix[u][v] && distance[u] != INT_MAX && distance[u] + graph.matrix[u][v] < distance[v])
+				distance[v] = distance[u] + graph.matrix[u][v];
+	}
+	printSolution(graph, distance);
+}
 

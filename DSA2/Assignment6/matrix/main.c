@@ -12,6 +12,8 @@ int main() {
 	prims(g);
 	printf("\n\nkrushkals : \n\n");
 	krushkals(g);
+	printf("\n\dijkstra : \n\n");
+	dijkstra(g, 0);
 	return 0;
 }
 
