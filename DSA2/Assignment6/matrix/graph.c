@@ -219,3 +219,6 @@ void krushkals(Graph graph) {
 	}
 }
 
+
+
+
