@@ -1,16 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import csv
 import copy
+import csv
 import itertools
-from collections import deque
 
 import cv2 as cv
-import numpy as np
 import mediapipe as mp
+import numpy as np
 
+from model import KeyPointClassifierSign
 from utils import CvFpsCalc
-from model import KeyPointClassifier
 
 
 def main():
@@ -36,10 +35,10 @@ def main():
         min_tracking_confidence=min_tracking_confidence,
     )
 
-    keypoint_classifier = KeyPointClassifier()
+    keypoint_classifier = KeyPointClassifierSign()
 
     # Read labels ###########################################################
-    with open('model/keypoint_classifier/keypoint_classifier_label.csv',
+    with open('model/keypoint_classifier/keypoint_classifier_label_sign.csv',
               encoding='utf-8-sig') as f:
         keypoint_classifier_labels = csv.reader(f)
         keypoint_classifier_labels = [
@@ -51,7 +50,6 @@ def main():
 
     #  ########################################################################
     mode = 0
-
     while True:
         fps = cvFpsCalc.get()
 
@@ -120,8 +118,6 @@ def select_mode(key, mode):
         mode = 0
     if key == 107:  # k
         mode = 1
-    if key == 104:  # h
-        mode = 2
     return number, mode
 
 

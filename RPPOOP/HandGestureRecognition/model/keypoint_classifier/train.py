@@ -5,12 +5,12 @@ from sklearn.model_selection import train_test_split
 
 RANDOM_SEED = 42
 
-dataset = 'keypoint.csv'
-model_save_path = 'keypoint_classifier.hdf5'
-tflite_save_path = 'keypoint_classifier.tflite'
+dataset = 'keypoint_sign.csv'
+model_save_path = 'keypoint_classifier_sign.hdf5'
+tflite_save_path = 'keypoint_classifier_sign.tflite'
 
 # Set number of classes
-NUM_CLASSES = 5
+NUM_CLASSES = 7
 
 # Dataset reading
 X_dataset = np.loadtxt(dataset, delimiter=',', dtype='float32', usecols=list(range(1, (21 * 2) + 1)))
